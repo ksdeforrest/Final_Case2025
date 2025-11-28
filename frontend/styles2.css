@@ -1,0 +1,331 @@
+:root { --bg: #fbecde; --card: #fbfbfb; --text: #2a2432; --muted: #9ca3af; 
+    --ok: #10b981; --err: #ef4444; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, 
+    sans-serif; background: var(--bg); color: var(--text); }
+    
+.container { max-width: 1300px; margin: 3rem auto; background: var(--card); 
+    padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 30px 
+    rgba(0,0,0,.35); border: 12px solid #d1655995;}
+    h1 { margin-top: 0; font-size: 2.5rem; text-align: center; font-family: "PT Serif", serif;}
+    
+    .lead { color: var(--muted); margin-bottom: 1.25rem; }
+    
+    .field { margin: 1rem 0; display: flex; flex-direction: column; gap: 
+    .4rem; }
+    
+    .field.checkbox { flex-direction: row; align-items: center; gap: .6rem; }
+    label { font-weight: 600; }
+    input[type="text"], input[type="email"], input[type="number"], select, 
+    textarea {
+      background: #0b1220; color: var(--text); border: 1px solid #1f2937; 
+    border-radius: .6rem; padding: .6rem .8rem;
+    }
+
+    select {
+      background: rgba(173, 141, 226, 0.495); 
+      color: var(--text); 
+      border: 1px solid #173417; 
+      border-radius: .6rem; 
+      padding: .9rem 1.2rem; 
+      appearance: none; 
+      -webkit-appearance: none; 
+      -moz-appearance: none; 
+      font-size: 1rem; 
+      background-image: none; 
+      box-shadow: none; 
+      outline: none;
+      font-family: 'Roboto Flex', sans-serif;
+    }
+    select option[value=""] {
+      color: #ffffff; /* Color for the placeholder option */
+    }
+
+    small { color: var(--muted); }
+    button { background: #1c305c; color: white; border: none; padding: .7rem 
+    1rem; border-radius: .6rem; cursor: pointer; font-weight: 600; }
+    button:disabled { opacity: .6; cursor: not-allowed; }
+    
+    .charts-container {
+      display: flex;           /* lay out children side by side */
+      gap: 2rem;               /* space between the charts */
+      flex-wrap: wrap;         /* allow wrapping on small screens */
+    }
+    
+    .chart-wrapper {
+      flex: 1 1 45%;           /* each chart takes ~45% of container width */
+      min-width: 300px;        /* ensures charts don't get too small */
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .chart-wrapper canvas {
+      height: 300px !important;  /* fixed height for charts */
+      width: 100% !important;
+    }
+    
+    .totals-container {
+      display: flex;           /* lay out children side by side */
+      gap: 2rem;               /* space between the sections */
+      flex-wrap: wrap;         /* allow wrapping on small screens */
+    }
+    
+    .total-wrapper {
+      flex: 1 1 45%;           /* each section takes ~45% of container width */
+      min-width: 300px;        /* ensures sections don't get too small */
+    }
+    
+    .leaderboards-container {
+      display: flex;           /* lay out children side by side */
+      gap: 2rem;               /* space between the leaderboards */
+      flex-wrap: wrap;        /* allow wrapping on small screens */
+    }
+    
+    .leaderboard-wrapper {
+      flex: 1 1 45%;           /* each leaderboard takes ~45% of container width */
+      min-width: 300px;        /* ensures leaderboards don't get too small */
+    }
+    
+    .button-link {
+      display: inline-block;
+      background: #d16559da;
+      color: white;
+      border: none;
+      padding: 1rem 7rem;
+      border-radius: .6rem;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.3rem;
+      transition: background-color 0.2s ease;
+    }
+    
+    .button-link:hover {
+      background: #c13c2dd1;
+    }
+    
+    .table-container {
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;     /* allow horizontal scrolling on small screens */
+      -webkit-overflow-scrolling: touch;
+      padding: .5rem 0;     /* small breathing room */
+    }
+    
+    #recent-submissions {
+      margin: 0;
+    }
+
+/* Grid lines / table styling for recent submissions */
+#recent-submissions {
+  width: 100%;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+#recent-submissions table {
+  width: 100%;
+  border-collapse: collapse; /* join borders into grid lines */
+  border-spacing: 1;
+  table-layout: auto;
+  min-width: 600px; /* prevent squishing on small screens; scroll via .table-container */
+}
+
+#recent-submissions th,
+#recent-submissions td {
+  border: 1px solid #44305f25; /* grid line color */
+  padding: .6rem .75rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+#recent-submissions thead th {
+  background: rgba(107, 90, 74, 0.06);
+  font-weight: 700;
+  position: sticky;
+  top: 0; /* keeps header visible when scrolling */
+  z-index: 1;
+}
+
+#recent-submissions tbody tr:nth-child(even) {
+  background: rgb(245, 183, 177, .06);
+}
+
+/* Shared table styling (matches #recent-submissions look) */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  min-width: 360px;
+  font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #44305f25;
+  padding: .6rem .75rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.data-table thead th {
+  background: rgba(67,62,120,0.06);
+  font-weight: 700;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: rgba(120, 118, 131, 0.06);
+}
+
+/* helper for numeric alignment */
+.data-table td.numeric {
+  text-align: right;
+}
+
+/* column color tokens (adjust these) */
+:root {
+  --pages-bg: rgba(47, 176, 148, 0.06);   /* left (pages) column background */
+  --minutes-bg: rgba(141, 119, 208, 0.06);/* right (minutes) column background */
+  --pages-accent: rgb(23, 88, 74);
+  --minutes-accent: #501d57;
+}
+
+/* Apply distinct backgrounds to the left/right columns (charts, totals, leaderboards) */
+.charts-container .chart-wrapper:first-child,
+.totals-container .total-wrapper:first-child,
+.leaderboards-container .leaderboard-wrapper:first-child {
+  background: var(--pages-bg);
+  padding: 1rem;
+  border-radius: 1.5rem;
+}
+
+/* Right column */
+.charts-container .chart-wrapper:last-child,
+.totals-container .total-wrapper:last-child,
+.leaderboards-container .leaderboard-wrapper:last-child {
+  background: var(--minutes-bg);
+  padding: 1rem;
+  border-radius: 1.5rem;
+}
+
+/* Accent the section headings in each column */
+.charts-container .chart-wrapper:first-child h2,
+.totals-container .total-wrapper:first-child h2,
+.leaderboards-container .leaderboard-wrapper:first-child h2 {
+  color: var(--pages-accent);
+  font-family: "Roboto Flex", sans-serif;
+}
+
+.charts-container .chart-wrapper:last-child h2,
+.totals-container .total-wrapper:last-child h2,
+.leaderboards-container .leaderboard-wrapper:last-child h2 {
+  color: var(--minutes-accent);
+  font-family: "Roboto Flex", sans-serif;
+}
+
+/* Keep canvases transparent so wrapper background shows */
+.chart-wrapper canvas {
+  background: transparent !important;
+}
+
+/* Small visual separation between column content and wrapper borders */
+.chart-wrapper, .total-wrapper, .leaderboard-wrapper {
+  box-shadow: none; /* optional - remove if you prefer existing shadows */
+}
+
+/* more vertical breathing room between page sections */
+.container > section {
+  margin: 1.5rem 0; /* increase to add more space between sections */
+}
+
+/* center section h2 headers (Recent Submissions, Minutes and Pages Data, etc.) */
+.container > section > h2 {
+  text-align: center;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  font-family: "Roboto Flex", sans-serif;
+}
+
+/* center specific action sections (download / return link) */
+.container > section.centered {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.container > section.centered a {
+  display: inline-block;
+  margin-top: .5rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.container > section.centered a:hover {
+  text-decoration: underline;
+}
+
+/* Distinct styling for the left (pages) and right (minutes) dropdowns */
+#pages-grade-filter,
+.charts-container .chart-wrapper:first-child select {
+  background: rgba(41, 155, 130, 0.2);
+  color: var(--pages-accent, rgb(23, 88, 74));
+  border: 1px solid rgb(23, 88, 74);
+  padding: .45rem .7rem;
+  border-radius: .5rem;
+  min-width: 10rem;
+  outline: none;
+}
+
+#pages-grade-filter:focus,
+.charts-container .chart-wrapper:first-child select:focus {
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+
+/* Right / minutes dropdown */
+#minutes-grade-filter,
+.charts-container .chart-wrapper:last-child select {
+  background: rgba(121, 82, 190, 0.247);
+  color: var(--minutes-accent, #501d57);
+  border: 1px solid #501d57;
+  padding: .45rem .7rem;
+  border-radius: .5rem;
+  min-width: 10rem;
+  outline: none;
+}
+
+#minutes-grade-filter:focus,
+.charts-container .chart-wrapper:last-child select:focus {
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
+}
+
+/* Optional: align the selects visually with their charts */
+.charts-container .chart-wrapper select {
+  margin-top: .6rem;
+  display: inline-block;
+}
+
+h2 {
+  font-family: "Roboto Flex", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 200;
+}
+.container > section:nth-of-type(1) > h2,
+.container > section:nth-of-type(2) > h2,
+.container > section.centered > h2 {
+  font-family: "Roboto Flex", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2rem;
+}
+
+.button-link {                            /* Return to Reading Log (button/link) */
+  font-family: "Roboto Flex", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Make the "Overall Total" text use Roboto Flex */
+.total-wrapper > div > strong {
+  font-family: "Roboto Flex", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

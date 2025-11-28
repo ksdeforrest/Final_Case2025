@@ -1,0 +1,173 @@
+:root { --bg: #c1dfdf; --card: #1a4f1b; --text: #ffffff; --muted: #9ca3af; 
+--ok: #10b981; --err: #ef4444; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Patrick Hand', 
+sans-serif; background: var(--bg); color: var(--text); font-size: 1.3rem;}
+
+.container { max-width: 760px; margin: 3rem auto; background: var(--card); 
+padding: 2rem; border-radius: 2rem; box-shadow: 0 10px 30px 
+rgba(164, 213, 184, 0.35); border: 12px solid #78643e;}
+h1 { margin-top: .2rem; margin-bottom: .1rem; font-size: 3.75rem; font-family: 'Cabin Sketch', cursive;  /* Apply Cabin Sketch only to title */ text-align: center;}
+
+.lead { color: var(--muted); margin-bottom: 1.25rem; margin-top: 0.15rem; text-align: center;}
+
+.field { margin: .5rem 0; display: flex; flex-direction: column; gap: 
+.4rem; }
+
+.field.checkbox { flex-direction: row; align-items: center; gap: .6rem; }
+label { font-weight: 1000; }
+input[type="text"], input[type="email"], input[type="number"], 
+textarea {
+  background: #619d61; color: var(--text); border: 1px solid #173417; 
+border-radius: .6rem; padding: 1rem 1.2rem;font-size: 1rem; 
+}
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  accent-color: #65b0ce;
+}
+textarea::placeholder {
+  color: #dddcdc; 
+}
+
+select {
+  background: rgb(97, 157, 97); 
+  color: var(--text); 
+  border: 1px solid #173417; 
+  border-radius: .6rem; 
+  padding: .9rem 1.2rem; 
+  appearance: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+  font-size: 1rem; 
+  background-image: none; 
+  box-shadow: none; 
+  outline: none;
+}
+select option[value=""] {
+  color: #ffffff; /* Color for the placeholder option */
+}
+
+select:invalid {
+  color: #dddcdc; /* Color when select shows placeholder (if required) */
+}
+small { color: var(--muted); }
+button { 
+  background: #40869f; 
+  color: rgb(248, 248, 248); 
+  border: none; 
+  padding: 1.2rem 2.5rem;  /* Increased padding for larger size */
+  border-radius: .6rem; 
+  cursor: pointer; 
+  font-weight: 600;
+  font-size: 1.2rem;  /* Larger font size */
+  display: block;  /* Makes it a block element so margin auto works */
+  margin: 2rem auto 0;  /* Centers horizontally, adds top margin */
+  width: auto;  /* Let width adjust to content */
+  min-width: 200px;  /* Ensures minimum width */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth color transition */
+  font-family: 'Patrick Hand'; 
+  font-size: 1.7rem;
+}
+
+button:hover:not(:disabled) {
+  background: #fefefe;  /* Darker blue on hover */
+  color: rgb(72, 135, 179); 
+  transform: translateY(-2px);  /* Optional: slight lift effect */
+}
+
+button:active:not(:disabled) {
+  background: #0d5937;  /* Even darker on click */
+  transform: translateY(0);  /* Reset lift */
+}
+
+button:disabled { opacity: .6; cursor: not-allowed; }
+
+.result { 
+  margin-top: 2rem; 
+  padding: .8rem; 
+  border-radius: .5rem; 
+  text-align: center;
+  display: none;  /* Hide by default */
+}
+
+.result:not(:empty) {
+  display: block;  /* Show when it has content */
+}
+
+.result.ok { background: rgba(166, 224, 204, 0.15); color: var(--text); border: 
+2px solid rgb(97, 157, 97, .4);}
+
+.result.error { background: rgba(239,68,68,.15); color: var(--err); 
+border: 1px solid rgba(239,68,68,.4); }
+code { background: #0b1220; padding: 2px 6px; border-radius: 4px; }
+.charts-container {
+  display: flex;           /* lay out children side by side */
+  gap: 2rem;               /* space between the charts */
+  flex-wrap: wrap;         /* allow wrapping on small screens */
+}
+
+.chart-wrapper {
+  flex: 1 1 45%;           /* each chart takes ~45% of container width */
+  min-width: 300px;        /* ensures charts don't get too small */
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-wrapper canvas {
+  max-width: 100%;           /* don't exceed container width */
+}
+
+.totals-container {
+  display: flex;           /* lay out children side by side */
+  gap: 2rem;               /* space between the sections */
+  flex-wrap: wrap;         /* allow wrapping on small screens */
+}
+
+.total-wrapper {
+  flex: 1 1 45%;           /* each section takes ~45% of container width */
+  min-width: 300px;        /* ensures sections don't get too small */
+}
+
+.dashboard-card {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: #114212;
+  border: 3px dashed rgba(255,255,255,0.35);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.dashboard-card h2 {
+  margin: 0 0 .35rem;
+  font-size: 1.7rem;
+  font-family: 'Cabin Sketch', cursive;
+}
+
+.dashboard-card p {
+  margin: 0;
+  color: #f3f3f3;
+  font-size: 1.1rem;
+}
+
+.dashboard-card__link {
+  background: #f9f2a5;
+  color: #0f3f0f;
+  padding: 0.9rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 5px 15px rgba(17, 66, 18, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.dashboard-card__link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(17, 66, 18, 0.45);
+}

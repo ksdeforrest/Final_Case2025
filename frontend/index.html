@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reading Log</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="container">
+    <h1>Reading Log</h1>
+    <p class="lead">
+      Fill out the form and submit!
+    </p>
+
+    <form id="reading-log-form" novalidate>
+      <div class="field">
+        <label for="name">Student Name: <span aria-hidden="true"></span></label>
+        <input id="name" name="name" type="text" required />
+      </div>
+
+      <div class="field">
+        <label for="grade">Grade: <span aria-hidden="true"></span></label>
+        <select id="grade" name="grade" required>
+          <option value="">Choose here!</option>
+          <option value="0">Kindergarten</option>
+          <option value="1">First Grade</option>
+          <option value="2">Second Grade</option>
+          <option value="3">Third Grade</option>
+          <option value="4">Fourth Grade</option>
+          <option value="5">Fifth Grade</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="minutes">Minutes Read: <span aria-hidden="true"></span></label>
+        <input id="minutes" name="minutes" type="number" min="0" required />
+      </div>
+
+      <div class="field">
+        <label for="pages">Pages Read:<span aria-hidden="true"></span></label>
+        <input id="pages" name="pages" type="number" min="0" required />
+      </div>
+
+      <div class="field">
+        <label for="comments">Anything else?</label>
+        <textarea id="comments" name="comments" rows="4" maxlength="1000" placeholder="Let me know if you read anything good!"></textarea>
+      </div>
+
+      <div class="field checkbox">
+        <input id="truth" name="truth" type="checkbox" required />
+        <label for="truth">I promise this is the real amount I read today!</label>
+      </div>
+
+      <button id="submitBtn" type="submit">Share my reading!</button>
+    </form>
+
+    <section id="result" class="result" aria-live="polite"></section>
+
+    <section class="dashboard-card" aria-labelledby="dashboard-card-title">
+      <div>
+        <h2 id="dashboard-card-title">Teachers: Need the latest stats?</h2>
+        <p></p>
+      </div>
+      <a class="dashboard-card__link" href="{{ url_for('dashboard') }}">
+        View Dashboard Here
+      </a>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("reading-log-form");
+    const result = document.getElementById("result");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      result.textContent = "";
+      result.style.display = "none";  // Hide it when clearing
+      submitBtn.disabled = true;
+
+      // Build payload from form controls
+      const fd = new FormData(form);
+      const payload = {
+        name: (fd.get("name") || "").toString(),
+        grade: Number(fd.get("grade")),
+        minutes: Number(fd.get("minutes")),
+        pages: Number(fd.get("pages")),
+        comments: (fd.get("comments") || "").toString(),
+        truth: fd.get("truth") === "on",
+      };
+
+      try {
+        const res = await fetch("/v1/reading_log", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const body = await res.json().catch(() => ({}));
+
+        if (res.ok) {
+          result.className = "result ok";
+          result.textContent = "Thank you! Great job reading today!";
+          result.style.display = "block";  // Show it when displaying message
+          form.reset();
+
+// Confetti
+          // from the left side
+          confetti({
+            particleCount: 350,
+            angle: 0,
+            spread: 55,
+            origin: { x: 0 },
+            startVelocity: 60,  // Lower = slower (default ~45-55)
+          });
+          // from the top
+          confetti({
+            particleCount: 350,
+            angle: 270,
+            spread: 55,
+            origin: { x: .5 , y:-.30},
+            startVelocity: 60,  // Lower = slower (default ~45-55)
+          });
+          // from the right side
+          confetti({
+            particleCount: 350,
+            angle: 180,
+            spread: 55,
+            origin: { x: 1 },
+            startVelocity: 60,
+          });
+          
+        } else {
+          result.className = "result error";
+          const detail = body.detail ? JSON.stringify(body.detail) : res.statusText;
+          result.textContent = `Error ${res.status}: ${body.error || "request_failed"} — ${detail}`;
+          result.style.display = "block";  // Show it for errors too
+        }
+      } catch (err) {
+        result.className = "result error";
+        result.textContent = "Network error. Is the API running at http://127.0.0.1:5000/v1/reading_log?";
+        result.style.display = "block";  // Show it for network errors too
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+</body>
+</html>
