@@ -23,7 +23,7 @@ app = Flask(__name__, template_folder="frontend", static_folder="frontend")
 FIELDNAMES = ["date", "time", "name", "grade", "minutes", "pages", "comments", "truth"]
 
 # Serve the HTML form
-@app.route("/form")
+@app.route("/")
 def form():
     return render_template("index.html")
 
@@ -56,7 +56,7 @@ def collect_reading_log():
         return jsonify({"error": "invalid_payload", "detail": str(e)}), 400
 
 # Optional: test endpoint
-@app.route("/")
+@app.route("/test")
 def home():
     return jsonify({"message": "Flask CSV API is running"})
 
