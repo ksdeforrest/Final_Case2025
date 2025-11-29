@@ -16,7 +16,8 @@ SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 
 # Optional: host and port
 HOST = os.getenv("HOST", "0.0.0.0")
-PORT = int(os.getenv("PORT", 5000))
+PORT = int(os.environ.get("PORT", 5000)) 
+DEBUG = os.environ.get("PORT") is None
 
 app = Flask(__name__, template_folder="frontend", static_folder="frontend")
 
@@ -231,4 +232,5 @@ def download_csv():
     return send_file(CSV_FILE, as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(host=HOST, port=PORT, debug=True)
+    import os
+    app.run(host=HOST, port=PORT, debug=DEBUG)
