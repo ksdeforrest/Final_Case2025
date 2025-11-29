@@ -115,13 +115,13 @@ def test_dashboard_data_returns_valid_json():
 
 def test_root_smoke():
     c = client()
-    r = c.get("/")
+    r = c.get("/test")
     assert r.status_code == 200
     assert "message" in r.json
 
 def test_form_route():
     c = client()
-    r = c.get("/form")
+    r = c.get("/")
     assert r.status_code == 200
     assert b"<" in r.data  # crude check for HTML content
 
