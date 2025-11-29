@@ -1,4 +1,5 @@
-# Final_Case2025
+# Final Case Study- Reading Log Form and Dashboard
+Katherine DeForrest
 
 ## **Executive summary**
 
