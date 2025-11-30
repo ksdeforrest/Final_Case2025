@@ -1,5 +1,4 @@
 # Final Case Study- Reading Log Form and Dashboard
-Katherine DeForrest
 
 ## **Executive summary**
 
@@ -18,7 +17,11 @@ This app contains both a form for students to fill out with their daily reading 
 
 The system uses a Flask app to collect, store, and visualize data. The frontend, contained in the frontend/ folder contains both the files of index.html (to submit the form) and dashboard.html (to view the data) and uses no external frameworks. It communicates with the backend with JSON POST. The backend runs using Flask API and accepts submissions from /v1/reading_log, validates incoming data, adds entries to the CSV file, computes the data for the dashboard with /v1/dashboard_data, and allows the CSV file to be downloaded with /download_csv. 
 
-***Sources, Sizes, & Formats***
+***Architecture Diagram:***
+
+![Architecture Diagram](assets/Architecture_Diagram.png)
+
+***Data/Models/Services:***
 
 *Sources:* reading_log.csv, index.html, dashboard.html, app.py
 
