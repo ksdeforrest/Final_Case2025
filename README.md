@@ -100,10 +100,15 @@ In app.py, the app route endpoint /test verifies that the API is running and ret
 In test_api.py, a temporary CSV file is created. In it, the following tests are run-
 
 test_requires_json checks input validation for JSON payloads 
+
 test_happy_path checks that JSON files are submitted and that they are added to the CSV file correctly
+
 test_dashboard_data_returns_valid_json makes sure that the dashboard API returns all of the information for the dashboard in a JSON file
+
 test_root_smoke is a smoke test to make sure that the server is running
+
 test_form_route makes sure that the form route is working
+
 test_download_csv makes sure the CSV download is working
 
 If all tests are passed, pytest will report that all 6 tests are passed (see image below). 
