@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # CSV file path from environment or default
-CSV_FILE = os.getenv("CSV_FILE", "reading_log.csv")
+CSV_FILE = os.getenv("CSV_FILE", "data/reading_log.csv")
 
 # Optional: Flask secret key
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
