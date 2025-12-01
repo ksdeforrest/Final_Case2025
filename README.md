@@ -60,11 +60,9 @@ The project uses Docker and runs with a run.sh script. The commands below can be
 
 ``` chmod +x run.sh # make the app executable```
 
-```./run.sh # run the app```
-
 ```docker build -t final-case:latest .```
 
-```docker run -v $(pwd)/data:/app/data -p 5500:5000 final-case:latest```
+```docker run -v $(pwd)/data:/app/data -p 5000:5000 final-case:latest```
 
 
 ## **Design Decisions​​**
